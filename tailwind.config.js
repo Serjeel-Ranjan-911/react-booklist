@@ -4,9 +4,14 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				booklistRed: '#e02224',
-				'booklistRed-light': '#ec3333',
-				'booklistRed-dark': '#ca1e20',
+				lightblue: {
+					100: '#aceaff',
+					800: '#205e82',
+					900: '#0C4A6E'
+				},
+				cyan: {
+					900: '#164E63'
+				}
 			},
 			fontFamily: {
 				inter: ['Inter', 'sans-serif'],
