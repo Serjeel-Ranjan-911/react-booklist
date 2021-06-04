@@ -22,7 +22,7 @@ export default function LandingPage() {
 					</div>
 				</div>
 				<div className='w-full'>
-					<form action='' className=' w-full'>
+					<form action='' className='w-full'>
 						<div className='flex flex-col mb-5'>
 							<label htmlFor='email' className='text-sm mb-2'>
 								Email Address
@@ -45,7 +45,7 @@ export default function LandingPage() {
 								className='py-2 px-2 rounded-md border border-gray-900 border-solid'
 							/>
 						</div>
-						<div className=' flex flex-row items-center w-full mb-5'>
+						<div className='flex flex-row items-center w-full mb-5'>
 							<input
 								type='checkbox'
 								name='remember-check'
