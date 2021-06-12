@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
-import LoginButton from './LoginButton';
-import LogoutButton from './LogoutButton';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
 
 export default function Header() {
   const { isAuthenticated } = useAuth0();
 
   const [toggle, setToggle] = useState(false);
-  const [searchValue, setSearchValue] = useState('Search');
+  const [searchValue, setSearchValue] = useState("Search");
 
   let homeButton = (
     <li className="p-1 focus:bg-booklistBlue-dark">
@@ -17,6 +17,8 @@ export default function Header() {
   );
 
   let profile = null;
+  let addBook = null;
+
   if (isAuthenticated) {
     homeButton = (
       <li className="p-1 focus:bg-booklistBlue-dark">
@@ -28,19 +30,24 @@ export default function Header() {
         <Link to="/profile">Profile</Link>
       </li>
     );
+    addBook = (
+      <li className="p-1 focus:bg-booklistBlue-dark">
+        <Link to="/addBook">Add Book</Link>
+      </li>
+    );
   }
 
   return (
     <>
-      <div className="col-span-2 flex justify-between pt-5 pb-4 px-2 z-30 relative bg-white sm:col-start-2 sm:col-span-1">
+      <div className="relative z-30 flex justify-between col-span-2 px-2 pt-5 pb-4 bg-white shadow-md sm:col-start-2 sm:col-span-1">
         <div className="flex items-center">
           <button
             type="button"
-            className="min-w-max mx-2 focus:outline-none focus:ring-2 focus:ring-gray-500"
+            className="mx-2 min-w-max focus:outline-none focus:ring-2 focus:ring-gray-500"
             onClick={() => setToggle(!toggle)}
           >
             <svg
-              className="h-7  fill-current text-gray-500  sm:hidden"
+              className="text-gray-500 fill-current h-7 sm:hidden"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
@@ -77,9 +84,9 @@ export default function Header() {
             </label>
           </form>
         </div>
-        <div className="flex min-w-max z-10">
+        <div className="z-10 flex min-w-max">
           <svg
-            className="h-7  px-2 stroke-current text-booklistBlue-dark"
+            className="px-2 stroke-current h-7 text-booklistBlue-dark"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -93,7 +100,7 @@ export default function Header() {
             />
           </svg>
           <svg
-            className="h-7  px-2 stroke-current text-booklistBlue-dark"
+            className="px-2 stroke-current h-7 text-booklistBlue-dark"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -108,11 +115,12 @@ export default function Header() {
           </svg>
         </div>
       </div>
-      <header className="col-start-1 row-start-1 row-span-2 hidden sm:inline bg-booklistBlue min-h-screen">
-        <nav className="m-2 text-white text-lg font-semibold">
+      <header className="hidden min-h-screen col-start-1 row-span-2 row-start-1 sm:inline bg-booklistBlue">
+        <nav className="m-2 text-lg font-semibold text-white">
           <ul>
             {homeButton}
             {profile}
+            {addBook}
             <LoginButton />
             <LogoutButton />
           </ul>
@@ -121,13 +129,14 @@ export default function Header() {
       <header
         className={`
         col-start-1 absolute top-16 sm:hidden w-screen bg-booklistBlue transform transition z-20
-          ${!toggle ? '-translate-y-full transparent' : 'translate-y-0'}
+          ${!toggle ? "-translate-y-full transparent" : "translate-y-0"}
         `}
       >
-        <nav className="m-2 text-white text-lg font-semibold text-center">
+        <nav className="m-2 text-lg font-semibold text-center text-white">
           <ul>
             {homeButton}
             {profile}
+            {addBook}
             <LoginButton />
             <LogoutButton />
           </ul>
