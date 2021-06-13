@@ -148,7 +148,7 @@ export default function Header() {
           ${!toggle ? '-translate-y-full transparent' : 'translate-y-0'}
         `}
       >
-        <nav className="m-2 text-lg font-semibold text-center text-white">
+        <nav className="flex justify-center m-2 text-lg font-semibold text-white">
           <ul>
             {homeButton}
             {profile}
