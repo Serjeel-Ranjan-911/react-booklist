@@ -1,53 +1,173 @@
-import Header from "../components/Header";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import Header from '../components/Header';
+import { loadAuthToken } from '../utils/local-storage';
+import API_BASE_URL from '../config';
 
 export default function AddBookPage() {
+  const [title, setTitle] = useState('');
+  const [pages, setPages] = useState('');
+  const [genre, setGenre] = useState('');
+  const [author, setAuthor] = useState('');
+  const [favorite, setFavorite] = useState(false);
+  const [series, setSeries] = useState('');
+  const [coverPhoto, setCoverPhoto] = useState('');
+  const history = useHistory();
+
+  function addBook(e) {
+    e.preventDefault();
+    const authToken = loadAuthToken();
+
+    const pagesNum = parseFloat(pages);
+    axios
+      .post(
+        `${API_BASE_URL}/books`,
+        {
+          list_id: 1,
+          author,
+          title,
+          pages: pagesNum,
+          // image_url: coverPhoto,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      )
+      .then(() => {
+        history.push('/dashboard');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function handlePhotoUpload(e) {
+    e.preventDefault();
+    const selected = e.target.files[0];
+    setCoverPhoto(selected.name);
+  }
+
   return (
     <section className=" sm:grid grid-cols-layout grid-rows-layout">
       <Header />
       <div className="min-h-screen col-start-2 row-start-2 bg-gray-100 ">
         <h2 className="px-4 pt-5 text-3xl font-bold text-gray-900 ">Add New</h2>
-
-        <div class=" shadow-md mt-7 mx-5 overflow-hidden rounded-md">
-          <form class="bg-white pt-5 pb-2 px-5 flex flex-col" id="new book">
-            <label name="Book Title">Book Title</label>
-            <input type="text" name="Book Title" required />
-            <label name="Pages">Pages</label>
-            <input type="text" name="Pages" />
-            <label for="Genre">Genre</label>
-            <select name="Genre">
-              <option value="Fiction">Fiction</option>
-              <option value="Non-Fiction">Non-Fiction</option>
-              <option value="Horror">Horror</option>
-              <option value="Biography">Biography</option>
-              <option value="Auto-Biography">Auto-Biography</option>
-              <option value="Mystery">Mistery</option>
-            </select>
-            <label name="Author">Author</label>
-            <input type="text" name="Author" />
-            <label for="Favorite">Favorite</label>
-            <label for="Favorite">
-              Add this book to your list of favorites
+        <div className=" shadow-md mt-7 mx-5 overflow-hidden rounded-md">
+          <form className="bg-white pt-5 pb-2 px-5 flex flex-col" id="new book">
+            <label className="my-2.5" htmlFor="Book Title">
+              Book Title
+              <input
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+                className="border-2 w-full"
+                type="text"
+                id="Book Title"
+                name="Book Title"
+                value={title}
+                required
+              />
             </label>
-            <input type="checkbox" name="Favorite" />
-            <label name="Series">Series / Collection</label>
-            <input type="text" name="Series" />
-            <label for="Photo">Cover Photo</label>
-            <input
-              type="file"
-              name="Photo"
-              accept="image/png, image/jpeg"
-            ></input>
+            <label className="my-2.5" htmlFor="Pages">
+              Pages
+              <input
+                onChange={(e) => {
+                  setPages(e.target.value);
+                }}
+                className="border-2 w-full"
+                type="number"
+                id="pages"
+                name="Pages"
+                value={pages}
+                required
+              />
+            </label>
+            <label className="my-2.5" htmlFor="Genre">
+              Genre
+              <select
+                onChange={(e) => {
+                  setGenre(e.target.value);
+                }}
+                className="border-2 w-full"
+                name="Genre"
+                id="Genre"
+                value={genre}
+              >
+                <option value="Fiction">Fiction</option>
+                <option value="Non-Fiction">Non-Fiction</option>
+                <option value="Horror">Horror</option>
+                <option value="Biography">Biography</option>
+                <option value="Auto-Biography">Auto-Biography</option>
+                <option value="Mystery">Mistery</option>
+              </select>
+            </label>
+            <label className="my-2.5" htmlFor="Author">
+              Author
+              <input
+                onChange={(e) => {
+                  setAuthor(e.target.value);
+                }}
+                className="border-2 w-full"
+                type="text"
+                name="Author"
+                id="Author"
+                value={author}
+                required
+              />
+            </label>
+            <label className="flex flex-col my-2.5" htmlFor="Favorite">
+              Favorite
+              <div className="text-gray-500">
+                Add this book to your list of favorites
+              </div>
+              <input
+                onChange={(e) => {
+                  setFavorite(e.target.value);
+                }}
+                type="checkbox"
+                name="Favorite"
+                id="Favorite"
+                value={favorite}
+              />
+            </label>
+            <label className="my-3" htmlFor="Series">
+              Series / Collection
+              <input
+                onChange={(e) => {
+                  setSeries(e.target.value);
+                }}
+                className="border-2 w-full"
+                type="text"
+                name="Series"
+                id="Series"
+                value={series}
+              />
+            </label>
+            <label className="my-3" htmlFor="Photo">
+              Cover Photo
+              <input
+                onChange={handlePhotoUpload}
+                className="border-2 w-full"
+                type="file"
+                name="Photo"
+                id="Photo"
+                accept="image/png, image/jpeg"
+              />
+            </label>
           </form>
 
           <div
-            class="bg-gray-50 h-16 flex items-center
+            className="bg-gray-50 h-16 flex items-center
           "
           >
             <button
-              class="bg-booklistBlue-dark rounded-md h-10 w-28 ml-4 text-white font-semibold"
+              className="bg-booklistBlue-dark rounded-md h-10 w-28 ml-4 text-white font-semibold"
               type="submit"
               form="new book"
-              value="Submit"
+              onClick={addBook}
             >
               Save
             </button>

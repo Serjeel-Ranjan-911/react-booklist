@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
-import LoginButton from "./LoginButton";
-import LogoutButton from "./LogoutButton";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+import LoginButton from './LoginButton';
+import LogoutButton from './LogoutButton';
 
 export default function Header() {
   const { isAuthenticated } = useAuth0();
 
   const [toggle, setToggle] = useState(false);
-  const [searchValue, setSearchValue] = useState("Search");
+  const [searchValue, setSearchValue] = useState('Search');
 
   let homeButton = (
-    <li className="p-1 focus:bg-booklistBlue-dark">
-      <Link to="/">Home</Link>
-    </li>
+    <Link to="/">
+      <li className="p-1 focus:bg-booklistBlue-dark">Home</li>
+    </Link>
   );
 
   let profile = null;
@@ -21,19 +21,35 @@ export default function Header() {
 
   if (isAuthenticated) {
     homeButton = (
-      <li className="p-1 focus:bg-booklistBlue-dark">
-        <Link to="/dashboard">Dashboard</Link>
-      </li>
+      <Link to="/dashboard">
+        <li className="p-1 focus:bg-booklistBlue-dark">Dashboard</li>
+      </Link>
     );
     profile = (
-      <li className="p-1 focus:bg-booklistBlue-dark">
-        <Link to="/profile">Profile</Link>
-      </li>
+      <Link to="/profile">
+        <li className="p-1 focus:bg-booklistBlue-dark">Profile</li>
+      </Link>
     );
     addBook = (
-      <li className="p-1 focus:bg-booklistBlue-dark">
-        <Link to="/addBook">Add Book</Link>
-      </li>
+      <Link to="/addBook">
+        <li className="flex items-center p-1 focus:bg-booklistBlue-dark">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 mr-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          Add Book
+        </li>
+      </Link>
     );
   }
 
@@ -129,7 +145,7 @@ export default function Header() {
       <header
         className={`
         col-start-1 absolute top-16 sm:hidden w-screen bg-booklistBlue transform transition z-20
-          ${!toggle ? "-translate-y-full transparent" : "translate-y-0"}
+          ${!toggle ? '-translate-y-full transparent' : 'translate-y-0'}
         `}
       >
         <nav className="m-2 text-lg font-semibold text-center text-white">
