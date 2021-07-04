@@ -12,7 +12,7 @@ export default function AddBookPage() {
   const [author, setAuthor] = useState('');
   const [favorite, setFavorite] = useState(false);
   const [series, setSeries] = useState('');
-  const [coverPhoto, setCoverPhoto] = useState('');
+  const [setCoverPhoto] = useState('');
   const history = useHistory();
 
   function addBook(e) {
@@ -34,7 +34,7 @@ export default function AddBookPage() {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
-        }
+        },
       )
       .then(() => {
         history.push('/dashboard');
@@ -55,49 +55,15 @@ export default function AddBookPage() {
       <Header />
       <div className="min-h-screen col-start-2 row-start-2 bg-gray-100 ">
         <h2 className="px-4 pt-5 text-3xl font-bold text-gray-900 ">Add New</h2>
-<<<<<<< HEAD
-
         <div className="mx-5 overflow-hidden rounded-md shadow-md mt-7">
           <form className="flex flex-col px-5 pt-5 pb-2 bg-white" id="new book">
-            <label name="Book Title">Book Title</label>
-            <input type="text" name="Book Title" required />
-            <label name="Pages">Pages</label>
-            <input type="text" name="Pages" />
-            <label htmlFor="Genre">Genre</label>
-            <select name="Genre">
-              <option value="Fiction">Fiction</option>
-              <option value="Non-Fiction">Non-Fiction</option>
-              <option value="Horror">Horror</option>
-              <option value="Biography">Biography</option>
-              <option value="Auto-Biography">Auto-Biography</option>
-              <option value="Mystery">Mistery</option>
-            </select>
-            <label name="Author">Author</label>
-            <input type="text" name="Author" />
-            <label htmlFor="Favorite">Favorite</label>
-            <label htmlFor="Favorite">
-              Add this book to your list of favorites
-            </label>
-            <input type="checkbox" name="Favorite" />
-            <label name="Series">Series / Collection</label>
-            <input type="text" name="Series" />
-            <label htmlFor="Photo">Cover Photo</label>
-            <input type="file" name="Photo" accept="image/png, image/jpeg" />
-          </form>
-
-          <div className="flex items-center h-16 bg-gray-50 ">
-            <button
-              className="h-10 ml-4 font-semibold text-white rounded-md bg-booklistBlue-dark w-28"
-=======
-        <div className=" shadow-md mt-7 mx-5 overflow-hidden rounded-md">
-          <form className="bg-white pt-5 pb-2 px-5 flex flex-col" id="new book">
             <label className="my-2.5" htmlFor="Book Title">
               Book Title
               <input
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
-                className="border-2 w-full"
+                className="w-full border-2"
                 type="text"
                 id="Book Title"
                 name="Book Title"
@@ -111,7 +77,7 @@ export default function AddBookPage() {
                 onChange={(e) => {
                   setPages(e.target.value);
                 }}
-                className="border-2 w-full"
+                className="w-full border-2"
                 type="number"
                 id="pages"
                 name="Pages"
@@ -125,7 +91,7 @@ export default function AddBookPage() {
                 onChange={(e) => {
                   setGenre(e.target.value);
                 }}
-                className="border-2 w-full"
+                className="w-full border-2"
                 name="Genre"
                 id="Genre"
                 value={genre}
@@ -144,7 +110,7 @@ export default function AddBookPage() {
                 onChange={(e) => {
                   setAuthor(e.target.value);
                 }}
-                className="border-2 w-full"
+                className="w-full border-2"
                 type="text"
                 name="Author"
                 id="Author"
@@ -173,7 +139,7 @@ export default function AddBookPage() {
                 onChange={(e) => {
                   setSeries(e.target.value);
                 }}
-                className="border-2 w-full"
+                className="w-full border-2"
                 type="text"
                 name="Series"
                 id="Series"
@@ -184,7 +150,7 @@ export default function AddBookPage() {
               Cover Photo
               <input
                 onChange={handlePhotoUpload}
-                className="border-2 w-full"
+                className="w-full border-2"
                 type="file"
                 name="Photo"
                 id="Photo"
@@ -193,13 +159,9 @@ export default function AddBookPage() {
             </label>
           </form>
 
-          <div
-            className="bg-gray-50 h-16 flex items-center
-          "
-          >
+          <div className="flex items-center h-16 bg-gray-50 ">
             <button
-              className="bg-booklistBlue-dark rounded-md h-10 w-28 ml-4 text-white font-semibold"
->>>>>>> d0d74665ec25700142849bea4bb48c8b3f713357
+              className="h-10 ml-4 font-semibold text-white rounded-md bg-booklistBlue-dark w-28"
               type="submit"
               form="new book"
               onClick={addBook}

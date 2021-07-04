@@ -1,6 +1,6 @@
-import React from "react";
-import logo from "../images/logo.png";
-import bgImg from "../images/sign-in.jpg";
+import React from 'react';
+import logo from '../images/logo.png';
+import bgImg from '../images/sign-in.jpg';
 
 export default function LandingPage() {
   return (
@@ -11,7 +11,10 @@ export default function LandingPage() {
           <h1 className="mb-5 text-3xl font-bold text-center text-gray-900 font-inter">
             Track Your Reading
           </h1>
-          <button className="w-full py-2 mb-5 border border-gray-900 border-solid rounded-md text-md ">
+          <button
+            type="button"
+            className="w-full py-2 mb-5 border border-gray-900 border-solid rounded-md text-md "
+          >
             Create Your Account
           </button>
           <div className="flex items-center w-full">
