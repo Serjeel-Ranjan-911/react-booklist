@@ -1,65 +1,68 @@
 import React from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import logo from '../images/logo.png';
 import bgImg from '../images/sign-in.jpg';
 
 export default function LandingPage() {
+  const { loginWithRedirect } = useAuth0();
+
   return (
-    <article className="md:flex h-screen">
-      <section className="px-10 flex flex-col items-center w-full md:w-5/12">
-        <div className="flex flex-col items-center mb-5 w-full">
+    <article className="h-screen md:flex">
+      <section className="flex flex-col items-center w-full px-10 md:w-5/12">
+        <div className="flex flex-col items-center w-full mb-5">
           <img className="w-1/3" src={logo} alt="logo" />
-          <h1 className="font-inter text-3xl text-center font-bold text-gray-900 mb-5">
+          <h1 className="mb-5 text-3xl font-bold text-center text-gray-900 font-inter">
             Track Your Reading
           </h1>
-          <button className="w-full py-2 mb-5 rounded-md border border-gray-900 border-solid text-md ">
+          <button
+            type="button"
+            className="w-full py-2 mb-5 border border-gray-900 border-solid rounded-md text-md "
+          >
             Create Your Account
           </button>
           <div className="flex items-center w-full">
-            <hr className="border-booklistRed border-1 border-solid w-10 flex-auto" />
-            <p className="mx-3 text-center text-sm">
+            <hr className="flex-auto w-10 border-solid border-booklistRed border-1" />
+            <p className="mx-3 text-sm text-center">
               Already have an account? Sign in below
             </p>
-            <hr className="border-booklistRed border-1 border-solid w-10 flex-auto" />
+            <hr className="flex-auto w-10 border-solid border-booklistRed border-1" />
           </div>
         </div>
         <div className="w-full">
           <form action="" className="w-full">
             <div className="flex flex-col mb-5">
-              <label htmlFor="email" className="text-sm mb-2">
+              <label htmlFor="email" className="mb-2 text-sm">
                 Email Address
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="px-2 py-2 border border-gray-900 border-solid rounded-md placeholder-text-sm"
+                />
               </label>
-              <input
-                type="email"
-                id="email"
-                name="user_email"
-                className="py-2 px-2 rounded-md border border-gray-900 border-solid placeholder-text-sm"
-              />
             </div>
             <div className="flex flex-col mb-5">
-              <label htmlFor="password" className="text-sm mb-2">
+              <label htmlFor="password" className="mb-2 text-sm">
                 Password
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  className="px-2 py-2 border border-gray-900 border-solid rounded-md"
+                />
               </label>
-              <input
-                type="password"
-                id="password"
-                name="user_password"
-                className="py-2 px-2 rounded-md border border-gray-900 border-solid"
-              />
             </div>
             <div className="flex flex-row items-center w-full mb-5">
-              <input
-                type="checkbox"
-                name="remember-check"
-                id="remember_check"
-                className="mr-5"
-              />
-              <label
-                className="text-sm w-full"
-                htmlFor="remember_check"
-              >
+              <label className="w-full text-sm" htmlFor="remember_check">
+                <input
+                  type="checkbox"
+                  name="remember-check"
+                  id="remember_check"
+                  className="mr-5"
+                />
                 Remember me
               </label>
-              <span className="text-sm w-full text-right">
+              <span className="w-full text-sm text-right">
                 <a
                   href="#sendpasswordreset"
                   className="text-booklistBlue-dark hover:underline"
@@ -70,14 +73,15 @@ export default function LandingPage() {
             </div>
             <button
               type="submit"
-              className="w-full py-2 rounded-md border bg-booklistBlue-light border-solid text-white"
+              onClick={() => loginWithRedirect()}
+              className="w-full py-2 text-white border border-solid rounded-md bg-booklistBlue-light"
             >
               Sign in
             </button>
           </form>
         </div>
       </section>
-      <aside className="invisible md:visible w-7/12">
+      <aside className="invisible w-7/12 md:visible">
         <img
           src={bgImg}
           alt="books on shelves"

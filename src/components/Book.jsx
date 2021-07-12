@@ -21,7 +21,7 @@ export default function Book({ book }) {
         <p>Bookmark</p>
         <p> | </p>
         <p>Page:</p>
-        <p>250</p>
+        <p>{book.pages}</p>
       </div>
     </div>
   );

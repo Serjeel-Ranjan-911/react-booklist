@@ -17,8 +17,8 @@ const Profile = () => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        const { user_metadata } = await metadataResponse.json();
-        setUserMetadata(user_metadata);
+        const { userMetadataResponse } = await metadataResponse.json();
+        setUserMetadata(userMetadataResponse);
       } catch (e) {
         console.log(e.message);
       }
