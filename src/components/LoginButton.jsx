@@ -14,15 +14,13 @@ const LoginButton = () => {
 
   return (
     !isAuthenticated && (
-      <li className="p-1 focus:bg-booklistBlue-dark text-center sm:text-left">
-        <button
-          className="font-semibold"
-          type="button"
-          onClick={() => loginWithRedirect()}
-        >
-          Log In
-        </button>
-      </li>
+      <button
+        type="submit"
+        onClick={() => loginWithRedirect()}
+        className="w-full py-2 text-white rounded-md bg-booklistBlue-light hover:bg-booklistBlue "
+      >
+        Sign in or create an account
+      </button>
     )
   );
 };
