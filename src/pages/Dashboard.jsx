@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import useBooksApi from '../hooks/useBooksApi';
-import useListsApi from '../hooks/useListsApi';
 import { saveAuthToken } from '../utils/local-storage';
 import Book from '../components/Book';
 import Header from '../components/Header';
@@ -10,8 +9,6 @@ export default function DashboardPage() {
   const { getAccessTokenSilently } = useAuth0();
   const { getAllBooks } = useBooksApi();
   const [books, setBooks] = useState(null);
-  const { getAllLists } = useListsApi();
-  const [lists, setLists] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
@@ -35,24 +32,15 @@ export default function DashboardPage() {
         console.log(e.message);
       }
     };
-    const getLists = async () => {
-      try {
-        const data = await getAllLists();
-        setLists(data);
-      } catch (e) {
-        console.log(e.message);
-      }
-    };
     await getAccessToken();
     getAllBooksEffect();
-    getLists();
   }, []);
 
   useEffect(() => {
-    if (books && lists) {
+    if (books) {
       setLoading(false);
     }
-  }, [books, lists]);
+  }, [books]);
 
   let booklist;
   if (loading) {
