@@ -10,7 +10,7 @@ export default function DashboardPage() {
   const { getAccessTokenSilently } = useAuth0();
   const { getAllBooks } = useBooksApi();
   const [books, setBooks] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
     const getAccessToken = async () => {
@@ -39,12 +39,12 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (books) {
-      setLoading(true);
+      setLoading(false);
     }
   }, [books]);
 
   let booklist;
-  if (!loading) {
+  if (loading) {
     booklist = null;
   } else {
     booklist = (
