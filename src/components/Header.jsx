@@ -32,7 +32,7 @@ export default function Header() {
       </Link>
     );
     addBook = (
-      <Link to="/addBook">
+      <Link to="/add-book">
         <li className="flex items-center p-1 focus:bg-booklistBlue-dark">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -159,7 +159,7 @@ export default function Header() {
           <ul>
             {homeButton}
             {profile}
-             {lists}
+            {lists}
             {addBook}
             <LoginButton />
             <LogoutButton />

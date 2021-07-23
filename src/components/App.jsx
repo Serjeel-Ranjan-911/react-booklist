@@ -8,6 +8,7 @@ import DashboardPage from '../pages/Dashboard';
 import ProfilePage from '../pages/Profile';
 import AddBook from '../pages/AddBook';
 import Lists from '../pages/Lists';
+import AddList from '../pages/AddList';
 
 function App() {
   const { isAuthenticated } = useAuth0();
@@ -26,11 +27,14 @@ function App() {
           <AuthenticateRoute path="/profile">
             <ProfilePage />
           </AuthenticateRoute>
-          <AuthenticateRoute path="/addBook">
+          <AuthenticateRoute path="/add-book">
             <AddBook />
           </AuthenticateRoute>
           <AuthenticateRoute path="/lists">
             <Lists />
+          </AuthenticateRoute>
+          <AuthenticateRoute path="/add-list">
+            <AddList />
           </AuthenticateRoute>
         </Switch>
       </main>
