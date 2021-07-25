@@ -8,13 +8,20 @@ import API_BASE_URL from '../config';
 export default function AddListPage() {
   const [listName, setName] = useState('');
   const [listYear, setYear] = useState(0);
+  const [yearValid, setYearValid] = useState(false);
 
   const history = useHistory();
 
   function addList(e) {
     e.preventDefault();
+
     const authToken = loadAuthToken();
     const yearNum = parseFloat(listYear);
+
+    if (yearNum < 0) {
+      setYearValid(true);
+      return;
+    }
     axios
       .post(
         `${API_BASE_URL}/lists`,
@@ -29,11 +36,21 @@ export default function AddListPage() {
         },
       )
       .then(() => {
-        history.push('/dashboard');
+        history.push('/lists');
       })
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  let yearWarning;
+
+  if (!yearValid) {
+    yearWarning = null;
+  } else {
+    yearWarning = (
+      <span className="text-red-500">Year must be a positive integer</span>
+    );
   }
 
   return (
@@ -71,6 +88,7 @@ export default function AddListPage() {
                 id="Year"
                 value={listYear}
               />
+              {yearWarning}
             </label>
             <div className="flex items-center h-16 bg-gray-50 ">
               <button
