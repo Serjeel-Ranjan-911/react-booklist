@@ -144,7 +144,7 @@ export default function AddBookPage() {
                 <option value="Horror">Horror</option>
                 <option value="Biography">Biography</option>
                 <option value="Auto-Biography">Auto-Biography</option>
-                <option value="Mystery">Mistery</option>
+                <option value="Mystery">Mystery</option>
               </select>
             </label>
             <label className="my-2.5" htmlFor="Author">
