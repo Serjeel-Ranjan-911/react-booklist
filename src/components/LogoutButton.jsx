@@ -1,9 +1,14 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import { clearAuthToken } from '../utils/local-storage';
 
 const LogoutButton = () => {
   const { logout, isAuthenticated, isLoading } = useAuth0();
 
+  function logOutHandler() {
+    logout({ returnTo: window.location.origin });
+    clearAuthToken();
+  }
   if (isLoading) {
     return <div>Loading ...</div>;
   }
@@ -14,7 +19,7 @@ const LogoutButton = () => {
         <button
           className="flex font-semibold"
           type="button"
-          onClick={() => logout({ returnTo: window.location.origin })}
+          onClick={() => logOutHandler()}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
