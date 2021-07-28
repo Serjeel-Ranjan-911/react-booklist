@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../components/Header';
@@ -12,19 +12,38 @@ export default function AddBookPage() {
   const [author, setAuthor] = useState('');
   const [favorite, setFavorite] = useState(false);
   const [series, setSeries] = useState('');
+  const [seriesOptions, setSeriesOptions] = useState([]);
   const [setCoverPhoto] = useState('');
   const history = useHistory();
+
+  useEffect(() => {
+    const authToken = loadAuthToken();
+
+    axios
+      .get(`${API_BASE_URL}/lists`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
+      .then((res) => {
+        setSeriesOptions(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   function addBook(e) {
     e.preventDefault();
     const authToken = loadAuthToken();
 
     const pagesNum = parseFloat(pages);
+    const listNum = parseFloat(series);
     axios
       .post(
         `${API_BASE_URL}/books`,
         {
-          list_id: 1,
+          list_id: listNum,
           author,
           title,
           pages: pagesNum,
@@ -48,6 +67,30 @@ export default function AddBookPage() {
     e.preventDefault();
     const selected = e.target.files[0];
     setCoverPhoto(selected.name);
+  }
+
+  let seriesSelect;
+
+  if (seriesOptions.length === 0) {
+    seriesSelect = null;
+  } else {
+    seriesSelect = (
+      <select
+        onChange={(e) => {
+          setSeries(e.target.value);
+        }}
+        className="w-full border-2"
+        name="Series"
+        id="Series"
+        value={series.list_id}
+      >
+        {seriesOptions.map((item) => (
+          <option value={item.list_id} key={item.list_id}>
+            {item.name}
+          </option>
+        ))}
+      </select>
+    );
   }
 
   return (
@@ -101,7 +144,7 @@ export default function AddBookPage() {
                 <option value="Horror">Horror</option>
                 <option value="Biography">Biography</option>
                 <option value="Auto-Biography">Auto-Biography</option>
-                <option value="Mystery">Mistery</option>
+                <option value="Mystery">Mystery</option>
               </select>
             </label>
             <label className="my-2.5" htmlFor="Author">
@@ -135,16 +178,7 @@ export default function AddBookPage() {
             </label>
             <label className="my-3" htmlFor="Series">
               Series / Collection
-              <input
-                onChange={(e) => {
-                  setSeries(e.target.value);
-                }}
-                className="w-full border-2"
-                type="text"
-                name="Series"
-                id="Series"
-                value={series}
-              />
+              {seriesSelect}
             </label>
             <label className="my-3" htmlFor="Photo">
               Cover Photo

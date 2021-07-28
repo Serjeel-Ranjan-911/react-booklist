@@ -18,6 +18,7 @@ export default function Header() {
 
   let profile = null;
   let addBook = null;
+  let lists = null;
 
   if (isAuthenticated) {
     homeButton = (
@@ -77,6 +78,11 @@ export default function Header() {
           Add Book
         </Link>
       </li>
+    );
+    lists = (
+      <Link to="/lists">
+        <li className="p-1 focus:bg-booklistBlue-dark">Lists</li>
+      </Link>
     );
   }
 
@@ -163,6 +169,7 @@ export default function Header() {
           <ul>
             {homeButton}
             {profile}
+            {lists}
             {addBook}
             <LoginButton />
             <LogoutButton />
@@ -175,10 +182,11 @@ export default function Header() {
           ${!toggle ? '-translate-y-full transparent' : 'translate-y-0'}
         `}
       >
-        <nav className="flex justify-center m-2 text-lg font-semibold text-white">
+        <nav className="flex justify-centerF m-2 text-lg font-semibold text-white">
           <ul>
             {homeButton}
             {profile}
+            {lists}
             {addBook}
             <LoginButton />
             <LogoutButton />
