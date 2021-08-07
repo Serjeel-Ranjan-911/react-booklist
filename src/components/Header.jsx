@@ -60,7 +60,7 @@ export default function Header() {
     );
     addBook = (
       <li className="items-center p-1 focus:bg-booklistBlue-dark">
-        <Link className="flex" to="/addBook">
+        <Link className="flex" to="/add-book">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 mr-2"
