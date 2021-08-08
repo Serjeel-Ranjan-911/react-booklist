@@ -13,7 +13,10 @@ export default function AddBookPage() {
   const [favorite, setFavorite] = useState(false);
   const [series, setSeries] = useState('');
   const [seriesOptions, setSeriesOptions] = useState([]);
-  const [setCoverPhoto] = useState('');
+  const [bookSelection, setBookSelection] = useState([]);
+  const [bookChoice, setBookChoice] = useState({});
+  const [searchBookLoading, setSearchBookLoading] = useState(false);
+
   const history = useHistory();
 
   useEffect(() => {
@@ -63,13 +66,21 @@ export default function AddBookPage() {
       });
   }
 
-  function handlePhotoUpload(e) {
-    e.preventDefault();
-    const selected = e.target.files[0];
-    setCoverPhoto(selected.name);
+  function searchBooks() {
+    setSearchBookLoading(true);
+    axios
+      .get(`https://www.googleapis.com/books/v1/volumes?q=${title}`)
+      .then((res) => {
+        setBookSelection(res.data.items);
+        setSearchBookLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   let seriesSelect;
+  let loading;
 
   if (seriesOptions.length === 0) {
     seriesSelect = null;
@@ -93,6 +104,12 @@ export default function AddBookPage() {
     );
   }
 
+  if (!searchBookLoading || title.length === 0) {
+    loading = null;
+  } else {
+    loading = <span>loading books...</span>;
+  }
+
   return (
     <section className=" sm:grid grid-cols-layout grid-rows-layout">
       <Header />
@@ -105,14 +122,30 @@ export default function AddBookPage() {
               <input
                 onChange={(e) => {
                   setTitle(e.target.value);
+                  if (title.length > 2) {
+                    searchBooks(title);
+                  }
+                }}
+                onSelect={(e) => {
+                  console.log('value', e.target.value);
                 }}
                 className="w-full border-2"
                 type="text"
                 id="Book Title"
                 name="Book Title"
                 value={title}
+                list="bookTitle"
+                autoComplete="off"
                 required
               />
+              <datalist id="bookTitle">
+                {bookSelection.map((book) => (
+                  <option value={book.volumeInfo.title} key={book.id}>
+                    {book.volumeInfo.title}
+                  </option>
+                ))}
+              </datalist>
+              {loading}
             </label>
             <label className="my-2.5" htmlFor="Pages">
               Pages
@@ -179,17 +212,6 @@ export default function AddBookPage() {
             <label className="my-3" htmlFor="Series">
               Series / Collection
               {seriesSelect}
-            </label>
-            <label className="my-3" htmlFor="Photo">
-              Cover Photo
-              <input
-                onChange={handlePhotoUpload}
-                className="w-full border-2"
-                type="file"
-                name="Photo"
-                id="Photo"
-                accept="image/png, image/jpeg"
-              />
             </label>
           </form>
 
