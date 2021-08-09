@@ -14,8 +14,9 @@ export default function AddBookPage() {
   const [series, setSeries] = useState('');
   const [seriesOptions, setSeriesOptions] = useState([]);
   const [bookSelection, setBookSelection] = useState([]);
-  const [bookChoice, setBookChoice] = useState({});
+  const [image, setImage] = useState(null);
   const [searchBookLoading, setSearchBookLoading] = useState(false);
+  const [filteredBooks, setFilteredBooks] = useState([]);
 
   const history = useHistory();
 
@@ -71,6 +72,7 @@ export default function AddBookPage() {
     axios
       .get(`https://www.googleapis.com/books/v1/volumes?q=${title}`)
       .then((res) => {
+        console.log('books result', res.data.items);
         setBookSelection(res.data.items);
         setSearchBookLoading(false);
       })
@@ -79,8 +81,43 @@ export default function AddBookPage() {
       });
   }
 
+  function selectBook(e) {
+    console.log(e);
+    if (bookSelection.length < 1) {
+      return;
+    }
+    if (e.keyCode === 13 || e.type === 'click' || e.key === 'Unidentified') {
+      console.log('htting this');
+      setFilteredBooks(
+        bookSelection.filter(
+          (book) =>
+            `${book.volumeInfo.title} - ${book.volumeInfo.authors}` === title,
+        ),
+      );
+      if (filteredBooks.length > 0) {
+        console.log(filteredBooks, 'filteredBooks');
+        setPages(filteredBooks[0].volumeInfo.pageCount);
+        setImage(filteredBooks[0].volumeInfo.imageLinks.thumbnail);
+        setAuthor(filteredBooks[0].volumeInfo.authors);
+        setBookSelection([]);
+      }
+    }
+  }
+
+  // useEffect(() => {
+  //   console.log('filteredBooks', filteredBooks);
+  //   if (filteredBooks.length > 0) {
+  //     console.log(filteredBooks, 'filteredBooks');
+  //     setPages(filteredBooks[0].volumeInfo.pageCount);
+  //     setImage(filteredBooks[0].volumeInfo.imageLinks.thumbnail);
+  //     setAuthor(filteredBooks[0].volumeInfo.authors);
+  //     setBookSelection([]);
+  //   }
+  // }, [filteredBooks]);
+
   let seriesSelect;
   let loading;
+  let imageElement;
 
   if (seriesOptions.length === 0) {
     seriesSelect = null;
@@ -110,6 +147,11 @@ export default function AddBookPage() {
     loading = <span>loading books...</span>;
   }
 
+  if (!image) {
+    imageElement = null;
+  } else {
+    imageElement = <img src={image} alt="" />;
+  }
   return (
     <section className=" sm:grid grid-cols-layout grid-rows-layout">
       <Header />
@@ -126,13 +168,11 @@ export default function AddBookPage() {
                     searchBooks(title);
                   }
                 }}
-                onSelect={(e) => {
-                  console.log('value', e.target.value);
-                }}
                 className="w-full border-2"
                 type="text"
                 id="Book Title"
                 name="Book Title"
+                onKeyDown={selectBook}
                 value={title}
                 list="bookTitle"
                 autoComplete="off"
@@ -140,11 +180,18 @@ export default function AddBookPage() {
               />
               <datalist id="bookTitle">
                 {bookSelection.map((book) => (
-                  <option value={book.volumeInfo.title} key={book.id}>
-                    {book.volumeInfo.title}
+                  <option key={book.id} onSelect={selectBook}>
+                    {book.volumeInfo.title} - {book.volumeInfo.authors}
                   </option>
                 ))}
               </datalist>
+              <button
+                className="bg-booklistBlue text-white rounded-md px-4 py-1 mt-1"
+                type="button"
+                onClick={selectBook}
+              >
+                Select
+              </button>
               {loading}
             </label>
             <label className="my-2.5" htmlFor="Pages">
@@ -213,6 +260,7 @@ export default function AddBookPage() {
               Series / Collection
               {seriesSelect}
             </label>
+            <div className="flex justify-center my-4">{imageElement}</div>
           </form>
 
           <div className="flex items-center h-16 bg-gray-50 ">
