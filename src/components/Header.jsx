@@ -19,6 +19,7 @@ export default function Header() {
   let profile = null;
   let addBook = null;
   let lists = null;
+  let favorites = null;
 
   if (isAuthenticated) {
     homeButton = (
@@ -82,6 +83,11 @@ export default function Header() {
     lists = (
       <Link to="/lists">
         <li className="p-1 focus:bg-booklistBlue-dark">Lists</li>
+      </Link>
+    );
+    favorites = (
+      <Link className="flex" to="/favorites">
+        <li className="items-center p-1 focus:bg-booklistBlue-dark">Favorites</li>
       </Link>
     );
   }
@@ -169,6 +175,7 @@ export default function Header() {
           <ul>
             {homeButton}
             {profile}
+            {favorites}
             {lists}
             {addBook}
             <LoginButton />
@@ -186,6 +193,7 @@ export default function Header() {
           <ul>
             {homeButton}
             {profile}
+            {favorites}
             {lists}
             {addBook}
             <LoginButton />

@@ -9,6 +9,8 @@ import ProfilePage from '../pages/Profile';
 import AddBook from '../pages/AddBook';
 import Lists from '../pages/Lists';
 import AddList from '../pages/AddList';
+import FavoritesPage from '../pages/Favorites';
+
 
 function App() {
   const { isAuthenticated } = useAuth0();
@@ -30,6 +32,10 @@ function App() {
           <AuthenticateRoute path="/add-book">
             <AddBook />
           </AuthenticateRoute>
+          <AuthenticateRoute path="/favorites">
+            <FavoritesPage />
+          </AuthenticateRoute>
+
           <AuthenticateRoute path="/lists">
             <Lists />
           </AuthenticateRoute>
