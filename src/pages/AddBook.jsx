@@ -8,7 +8,6 @@ import API_BASE_URL from '../config';
 export default function AddBookPage() {
   const [title, setTitle] = useState('');
   const [pages, setPages] = useState('');
-  const [genre, setGenre] = useState('');
   const [author, setAuthor] = useState('');
   const [favorite, setFavorite] = useState(false);
   const [series, setSeries] = useState('');
@@ -127,25 +126,6 @@ export default function AddBookPage() {
                 value={pages}
                 required
               />
-            </label>
-            <label className="my-2.5" htmlFor="Genre">
-              Genre
-              <select
-                onChange={(e) => {
-                  setGenre(e.target.value);
-                }}
-                className="w-full border-2"
-                name="Genre"
-                id="Genre"
-                value={genre}
-              >
-                <option value="Fiction">Fiction</option>
-                <option value="Non-Fiction">Non-Fiction</option>
-                <option value="Horror">Horror</option>
-                <option value="Biography">Biography</option>
-                <option value="Auto-Biography">Auto-Biography</option>
-                <option value="Mystery">Mystery</option>
-              </select>
             </label>
             <label className="my-2.5" htmlFor="Author">
               Author
